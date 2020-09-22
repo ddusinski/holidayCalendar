@@ -38,12 +38,6 @@ public class CalendarEventSerializer extends StdSerializer<CalendarEvent> {
         jgen.writeStringField("description", calendarEvent.getDescription());
         jgen.writeEndObject();
 
-
-//        return "CalendarEvent{"+
-//                "title: "+title+
-//                ", start: "+start+
-//                ", end:"+end+
-//                "}";
     }
 
 }

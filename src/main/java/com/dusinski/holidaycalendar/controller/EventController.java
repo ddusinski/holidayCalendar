@@ -35,7 +35,6 @@ public class EventController {
         model.addAttribute("eventListByUser", eventService.findEventsByUser(userService.returnUserById(userId)));
         model.addAttribute("userList",userService.findAllUsers());
         return "/event/showEvents";
-
     }
 
     @RequestMapping(value = "/delete/{eventId}")
@@ -54,7 +53,6 @@ public class EventController {
         if (result.hasErrors()) {
             return "/event/addEventForm";
         }
-
         eventService.saveCalendarEvent(calendarEvent);
         return "/event/eventWaitForVerification";
     }

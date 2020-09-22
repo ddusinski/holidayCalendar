@@ -6,12 +6,15 @@ import com.dusinski.holidaycalendar.model.User;
 import com.dusinski.holidaycalendar.repository.CalendarEventRepository;
 import com.dusinski.holidaycalendar.repository.EventConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 @Service
@@ -26,13 +29,20 @@ public class EventService {
     @Autowired
     private EmailSenderService emailSenderService;
 
-    private void sendEmail(String confirmationToken, String emailAddress){
+    @Value("${server.port}")
+    private int serverPort;
+
+    public void sendEmail(String confirmationToken, String emailAddress) throws UnknownHostException {
+
+
+        String serverIp = InetAddress.getLocalHost().getHostAddress();
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(emailAddress);
         mailMessage.setSubject("Complete Registration of the Holiday Event");
         mailMessage.setFrom("confirmationholiday@gmail.com");
         mailMessage.setText("To confirm your event, please click here : "
-                + "http://localhost:8090/event/confirm-event?token="+confirmationToken
+                + "http://"+serverIp+":"+serverPort+"/event/confirm-event?token="+confirmationToken
         );
         emailSenderService.sendEmail(mailMessage);
     }
@@ -68,7 +78,10 @@ public class EventService {
         EventConfirmationToken eventConfirmationToken = new EventConfirmationToken(calendarEvent);
         eventConfirmationTokenRepository.save(eventConfirmationToken);
 
-        sendEmail(eventConfirmationToken.getEventConfirmationToken(),auth.getName());
+        try{sendEmail(eventConfirmationToken.getEventConfirmationToken(),auth.getName());}
+            catch (Exception e){
+            System.out.println(e.toString());
+            }
     }
 
     public  CalendarEvent findEventById(long eventId){return calendarEventRepository.findById(eventId);   }

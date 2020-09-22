@@ -28,14 +28,13 @@ public class UserController {
 
     @RequestMapping(value = "/delete/{userId}")
     public String deleteUser(@PathVariable long userId) {
-        userService.deleteUserbyID(userId);
+        userService.deleteUserByID(userId);
         return "redirect:/user/show";
     }
 
     @GetMapping(path = "/add")
     public String addUserForm(User user, Model model) {
         model.addAttribute("adminList", userService.findAllManagers());
-
         return "user/addUser";
     }
 
@@ -43,14 +42,12 @@ public class UserController {
     public String addUserForm(@Valid User user, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            System.out.println("There was an exception: "+ result.toString());
             model.addAttribute("adminList", userService.findAllManagers());
             return "user/addUser";
         }
 
 
         userService.addUser(user);
-
         return "redirect:/user/show";
     }
 

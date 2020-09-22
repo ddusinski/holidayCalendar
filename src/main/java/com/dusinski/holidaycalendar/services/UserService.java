@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 public class UserService {
@@ -25,10 +24,10 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUserbyID(long userID) {
+    public void deleteUserByID(long userID) {
         User tempUser = returnUserById(userID);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (tempUser.getEmail()==auth.getName()) {
+        if (tempUser.getEmail().equals(auth.getName())) {
         System.out.println("Prevent against deleting by yourself");
         }
 
