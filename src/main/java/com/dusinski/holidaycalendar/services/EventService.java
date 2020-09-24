@@ -32,11 +32,14 @@ public class EventService {
     @Value("${server.port}")
     private int serverPort;
 
+    @Value("${server.ip}")
+    private String serverIp;
+
     public void sendEmail(String confirmationToken, String emailAddress) throws UnknownHostException {
 
 
-        String serverIp = InetAddress.getLocalHost().getHostAddress();
-
+//        String serverIp = InetAddress.getLocalHost().getHostAddress();
+//
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(emailAddress);
         mailMessage.setSubject("Complete Registration of the Holiday Event");
