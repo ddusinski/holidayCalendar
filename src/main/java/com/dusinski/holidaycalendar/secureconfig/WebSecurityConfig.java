@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                     .antMatchers("/", "/main.css", "/main.js","/h2-console/**")
                     .permitAll()
-                    .antMatchers("/addEvent").hasAnyAuthority("ADMIN", "USER")
+                    .antMatchers("/event/**").hasAnyAuthority("ADMIN", "USER")
                     .antMatchers("/user/**").hasAuthority("ADMIN")
                     .anyRequest().authenticated()
                 .and()
