@@ -3,3 +3,6 @@ WEB app for booking holidays or sick leaves of users. As my company had a proble
 
 Back-end: Spring Boot + Security + JPA with H2 database \
 Frond-end: Thymealeaf + FullCalendar.js 
+
+This application runs on
+https://dd-holidaycalendar-app.herokuapp.com/
