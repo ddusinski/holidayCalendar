@@ -34,7 +34,7 @@ public class EventController {
         model.addAttribute("userName",userService.returnUserById(userId));
         model.addAttribute("eventListByUser", eventService.findEventsByUser(userService.returnUserById(userId)));
         model.addAttribute("userList",userService.findAllUsers());
-        return "/event/showEvents";
+        return "event/showEvents";
     }
 
     @RequestMapping(value = "/delete/{eventId}")
@@ -45,16 +45,16 @@ public class EventController {
 
     @GetMapping(path = "/addEvent")
     public String showAddEventForm(CalendarEvent calendarEvent) {
-        return "/event/addEventForm";
+        return "event/addEventForm";
     }
 
     @PostMapping(path = "/addEvent")
     public String checkEvent(@Valid CalendarEvent calendarEvent, BindingResult result) {
         if (result.hasErrors()) {
-            return "/event/addEventForm";
+            return "event/addEventForm";
         }
         eventService.saveCalendarEvent(calendarEvent);
-        return "/event/eventWaitForVerification";
+        return "event/eventWaitForVerification";
     }
 
     @RequestMapping(value = "/confirm-event", method = {RequestMethod.GET, RequestMethod.POST})
@@ -64,9 +64,9 @@ public class EventController {
 
             eventService.activateEvent(confirmationToken);
 
-            return "/event/eventVerified";
+            return "event/eventVerified";
         } else {
-            return "/event/eventVerificationError";
+            return "event/eventVerificationError";
         }
     }
 }
